@@ -1,7 +1,7 @@
 # Chocolatey Packages
 
 [![build](https://ci.appveyor.com/api/projects/status/github/nverno/chocolatey-packages?svg=true)](https://ci.appveyor.com/project/nverno/chocolatey-packages)
-[Update status](https://gist.github.com/nverno/YOUR_GIST_ID)
+[Update status](https://gist.github.com/nverno/97a0f42da54bac1667a071e36faf3fe8)
 
 ---
 

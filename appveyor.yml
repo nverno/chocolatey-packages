@@ -47,29 +47,29 @@ install:
   - ps: 'Get-CimInstance win32_operatingsystem -Property Caption, OSArchitecture, Version | fl Caption, OSArchitecture, Version'
   - ps: $PSVersionTable
   - ps: |
-    $x=$null; $is_branch = ($Env:au_version -ne $null) -and ([version]::TryParse($Env:au_version, [ref]$x) -eq $false)
-    if ($is_branch) {
-        pushd ..
-            git clone -q https://github.com/majkinetor/au.git
-            cd au
-            git fetch
-            git checkout -q $Env:au_version
-            ./build.ps1 -Install -NoChocoPackage
-        popd
-    } else {
-        Install-PackageProvider -Name NuGet -Force
-        Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+      $x=$null; $is_branch = ($Env:au_version -ne $null) -and ([version]::TryParse($Env:au_version, [ref]$x) -eq $false)
+      if ($is_branch) {
+          pushd ..
+              git clone -q https://github.com/majkinetor/au.git
+              cd au
+              git fetch
+              git checkout -q $Env:au_version
+              ./build.ps1 -Install -NoChocoPackage
+          popd
+      } else {
+          Install-PackageProvider -Name NuGet -Force
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 
-        $params = @{ Name = 'au' }
-        if ( $Env:au_version -ne $null ) { $params.MinimumVersion = $Env:au_version }
-        Install-Module @params
+          $params = @{ Name = 'au' }
+          if ( $Env:au_version -ne $null ) { $params.MinimumVersion = $Env:au_version }
+          Install-Module @params
 
-        Get-Module au -ListAvailable | select Name, Version
-    }
+          Get-Module au -ListAvailable | select Name, Version
+      }
 
 build_script:
   - ps: |
-    ./au/update_all.ps1
+      ./au/update_all.ps1
 
 #on_finish:
 #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
